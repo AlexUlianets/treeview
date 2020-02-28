@@ -1,0 +1,22 @@
+[
+  {"company": "google",
+    "front-end":
+    {
+      "lastname": "Alex",
+      "firstname": "Ulianets",
+      "position": {
+        "value": "React.js"
+      }
+    },
+    "back-end":
+    {
+      "lastname": "Oleg",
+      "firstname": "Google",
+      "position": {
+        "value": "React.js"
+      }
+    },
+    "title": "Test nested json and custome useState",
+    "category": ["Development", "Technology"]
+  }
+]

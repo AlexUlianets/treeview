@@ -1,0 +1,59 @@
+<html lang="ru">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <style>
+        .nested-element {
+            margin: 0;
+            position: relative;
+        }
+
+        button {
+            margin-bottom: 10px;
+        }
+
+        div.nested-element:before {
+            content: '';
+            position: absolute;
+            top: 24px;
+            left: 1px;
+            height: calc(100% - 48px);
+            border-left: 1px solid red;
+        }
+
+        .title {
+            margin-left: 16px;
+        }
+
+        .expander {
+            position: absolute;
+            top: 6px;
+            left: 0px;
+            width: 0;
+            height: 0;
+            border-top: 4px solid transparent;
+            border-bottom: 4px solid transparent;
+            border-left: 5px solid #3b8012;
+            cursor: pointer;
+            transform: rotate(90deg);
+        }
+
+        .expander.closed {
+            transform: rotate(0deg);
+        }
+
+        .collapsed {
+            display: none;
+        }
+
+        .bold {
+            font-weight: bold;
+        }
+
+    </style>
+    <title>⠀Test </title>
+</head>
+<body>
+    <div id="root"></div>
+</body>
+</html>
