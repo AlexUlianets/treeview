@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {CustomReact} from "../index";
 
 /*
@@ -9,7 +9,7 @@ import {CustomReact} from "../index";
 
 const TreeView = ({
      data, //json data
-     expanded = true,  //if element is opened
+     expanded,  //if element is opened
      name = null, //name could be any string
      isLast = true, //if element is the last
      isChildElement = false, //if element is the first or no
@@ -18,11 +18,14 @@ const TreeView = ({
 
     const [isExpanded, setIsToggled] = CustomReact.useState(expanded);
 
+    useEffect(()=>
+        {
+            setIsToggled(expanded)
+        }, [expanded]
+    );
+
     return (
         <>
-            {/*Buttons collapse and expand*/}
-            {!isChildElement && isExpanded && <button onClick={() => setIsToggled(false)}>Collapse all</button>}
-            {!isChildElement && !isExpanded && <button onClick={() => setIsToggled(true)}>Expand all</button>}
             <div
                 style={{marginLeft: isChildElement ? 16 : 4 + 'px'}}
                 className={isParentExpanded ? 'nested-element' : 'nested-element collapsed'}
@@ -36,15 +39,15 @@ const TreeView = ({
                     {Array.isArray(data) ? '[' : '{'}
                     {!isExpanded && '...'}
 
-                    {/*Recursion for nested json elements*/}
-
                     {Object.keys(data).map((v, i, a) =>
                         typeof data[v] == 'object' ? (
                             <TreeView
+                                key={i}
                                 data={data[v]}
                                 isLast={i === a.length - 1}
                                 name={Array.isArray(data) ? null : v}
                                 isChildElement
+                                expanded={isExpanded}
                                 isParentExpanded={isParentExpanded && isExpanded}
                             />
                         ) : (
