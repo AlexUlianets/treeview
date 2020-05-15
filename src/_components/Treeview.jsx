@@ -13,15 +13,30 @@ const TreeView = ({
      name = null, //name could be any string
      isLast = true, //if element is the last
      isChildElement = false, //if element is the first or no
-     isParentExpanded = true //if the first element is opened
- }) => {
+     isParentExpanded = true, //if the first element is opened,
+     countClosedFunction,
+     closedCount,
+     countResets
+}) => {
 
     const [isExpanded, setIsToggled] = CustomReact.useState(expanded);
+    const [parentClicked, setParentClicked] = CustomReact.useState(expanded);
+
+    const setToggleMethod = (ex) => {
+        ex ? countClosedFunction(closedCount-1<0 ? 0 : closedCount-1) : countClosedFunction(closedCount+1);
+        setIsToggled(ex)
+        setParentClicked(true)
+    }
+
 
     useEffect(()=>
         {
             setIsToggled(expanded)
-        }, [expanded]
+            if(expanded===true){
+                setParentClicked(true);
+            }
+
+        }, [expanded, countResets]
     );
 
     return (
@@ -33,7 +48,7 @@ const TreeView = ({
 
                 <span
                       className={isExpanded ? 'expander' : 'expander closed'}
-                      onClick={() => setIsToggled(!isExpanded)}
+                      onClick={() => setToggleMethod(!isExpanded)}
                   />
                     {name ? <span className="title bold"> {name}: </span> : <span className="title"></span>}
                     {Array.isArray(data) ? '[' : '{'}
@@ -47,8 +62,11 @@ const TreeView = ({
                                 isLast={i === a.length - 1}
                                 name={Array.isArray(data) ? null : v}
                                 isChildElement
-                                expanded={isExpanded}
+                                expanded={isExpanded && !parentClicked ? isExpanded : parentClicked}
+                                countClosedFunction={countClosedFunction}
+                                closedCount={closedCount}
                                 isParentExpanded={isParentExpanded && isExpanded}
+                                countResets={countResets}
                             />
                         ) : (
                             <p
